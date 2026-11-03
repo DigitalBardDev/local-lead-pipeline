@@ -1,0 +1,23 @@
+name: "B2B SaaS Prospecting"
+description: "Ultra-fast prospecting for B2B software vendors. Skips screenshots and visual audits to focus purely on tech stack detection, existing SaaS usage, Sunbiz owner identification, and email outreach."
+
+pipeline:
+  - tech_stack
+  - pagespeed
+  - owner_recon
+  - export_sqlite
+
+config:
+  score_threshold: 0
+  max_workers: 5
+  db_file: "seen_leads.json"
+  out_dir: "output"
+
+queries:
+  - "lawn care"
+  - "plumbing contractor"
+  - "auto repair shop"
+  - "pet grooming"
+
+locations:
+  - "Tallahassee, FL"

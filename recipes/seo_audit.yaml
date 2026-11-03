@@ -1,0 +1,25 @@
+name: "SEO & Speed Optimization Hunter"
+description: "Skips the heavy Gemini visual analysis and focuses entirely on PageSpeed Insights and Tech Stack. Extremely fast for generating SEO leads."
+
+pipeline:
+  - tech_stack
+  - pagespeed
+  - owner_recon
+  - export_sqlite
+  - export_html
+
+config:
+  score_threshold: 0
+  max_workers: 3
+  db_file: "seen_leads.json"
+  out_dir: "output"
+
+queries:
+  - "chiropractor"
+  - "dentist"
+  - "med spa"
+  - "urgent care"
+  - "veterinarian"
+
+locations:
+  - "Tallahassee, FL"

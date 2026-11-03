@@ -1,0 +1,82 @@
+name: "TV Ad & Media Sales Hunter"
+description: "Focuses on finding established, high-budget businesses (high reviews) to pitch local TV advertising and media buys."
+
+pipeline:
+  - tech_stack
+  - pagespeed
+  - visual_audit
+  - owner_recon
+  - wtxl_recon
+  - export_sqlite
+  - export_html
+
+config:
+  html_format: "dossier"
+  visual_audit_sys: "You are a Digital Advertising Strategist for Scripps Digital. Use the full 1-10 scale. Find flaws that hurt paid ad conversions."
+  visual_audit_prompt: |
+    You are a Digital Advertising Strategist for Scripps Digital. Analyze these two screenshots (desktop and mobile). 
+    We are pitching them a high-dollar OTT, Programmatic, and Local TV ad campaign. If their website is terrible, the ad traffic will bounce and the campaign will fail.
+    Identify specific flaws that will hurt ad conversions (e.g. no phone number at the top, weak call to action, hard to read on mobile, no video presence).
+    
+    Use this strict rubric for the 'Paid Traffic Readiness' score:
+    1-3: Looks like 1998, unreadable, broken. Ad traffic will bounce immediately.
+    4-5: Barely passable, clunky. Needs a landing page before running ads.
+    6-7: Average modern template. Good enough to run ads.
+    8-10: Stunning, custom, high-end design. Ready for massive traffic.
+
+    Return a raw JSON object with NO markdown formatting, NO backticks, and NO extra text.
+    The JSON must have these exact keys:
+    "gemini_score": integer 1-10 using the strict rubric above.
+    "gemini_flaws": string listing 1 to 3 specific conversion-killing flaws.
+    "suggestion": string giving the single best actionable pitch on how Scripps Digital can fix their digital presence to maximize their TV ad ROI.
+    "is_mobile_responsive": boolean true/false checking if the mobile version is properly responsive.
+    "has_baked_in_text": boolean true/false checking if large text is baked into images instead of HTML.
+  score_threshold: 0
+  max_workers: 3
+  db_file: "wtxl_seen_leads.json"
+  sqlite_filename: "wtxl_leads.db"
+  out_dir: "output/wtxl"
+  html_prefix: "wtxl_report_"
+  gemini_model: "gemini-3.5-flash-lite"
+  display_mapping:
+    html_score: "Overall Score"
+    business_name: "Business"
+    category: "Category"
+    location: "Location"
+    review_count_rating: "Reviews & Rating"
+    company_scale: "Scale"
+    wtxl_market_summary: "AI Market Summary"
+    wtxl_ad_spend: "Competitor Ad Spend"
+    backstory_hooks: "Raw Intel (Reddit/News/Ads)"
+    website_url: "Website"
+    phone: "Phone"
+    email: "Email"
+    email_status: "Email Status"
+    alternate_contacts: "Alternate Contacts"
+    owner_name: "Decision Maker (Owner)"
+    owner_source: "Owner Source"
+    years_in_business: "Years in Business"
+    screenshot_path: "Screenshot"
+    builder_detected: "Website Platform"
+    saas_detected: "SaaS Detected"
+    audit_bullet_points: "Tech Stack Intel"
+    gemini_score: "Visual Design Score"
+    gemini_flaws: "Visual Design Flaws"
+    psi_performance: "Speed Score"
+    psi_accessibility: "Accessibility Score"
+    psi_best_practices: "Best Practices Score"
+    psi_seo: "SEO Score"
+    psi_lcp: "LCP (Speed)"
+    psi_fcp: "FCP (Speed)"
+    recon_report_path: "Deep Recon Report"
+queries:
+  - "personal injury lawyer"
+  - "car dealership"
+  - "roofing contractor"
+  - "plumbing company"
+  - "hvac company"
+  - "plastic surgeon"
+  - "furniture store"
+
+locations:
+  - "Tallahassee, FL"

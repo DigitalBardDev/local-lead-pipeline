@@ -1,0 +1,36 @@
+name: "Web Design & TV Ad Sales Lead Hunter"
+description: "Full end-to-end pipeline: Maps harvesting, deep tech stack analysis, PageSpeed audits, Gemini Vision aesthetic ratings, Sunbiz owner recon, and Supabase cloud sync."
+
+pipeline:
+  - tech_stack
+  - pagespeed
+  - visual_audit
+  - owner_recon
+  - export_sqlite
+  - export_html
+
+config:
+  html_format: "dossier"
+  html_prefix: "webdesign_report_"
+  score_threshold: 0
+  max_workers: 3
+  db_file: "seen_leads.json"
+  out_dir: "output"
+  gemini_model: "gemini-3.5-flash-lite"
+  save_cards: true
+  cleanup_temp_images: false
+
+queries:
+  - "lawn care"
+  - "tree service"
+  - "roofing contractor"
+  - "hvac repair"
+  - "plumbing service"
+  - "pressure washing"
+  - "junk removal"
+  - "fencing contractor"
+
+locations:
+  - "Tallahassee, FL"
+  - "Monticello, FL"
+  - "Thomasville, GA"

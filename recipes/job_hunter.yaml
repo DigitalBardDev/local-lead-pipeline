@@ -1,0 +1,38 @@
+name: "AI Job Hunter & Employer Recon"
+description: "Aggregates job postings, performs Google Dorking for Glassdoor/Reddit sentiment, and uses AI to grade employer toxicity and growth potential."
+
+pipeline:
+  - company_recon
+  - job_ai_audit
+  - export_sqlite
+  - export_html
+  - export_reddit
+
+config:
+  harvester_type: "google_jobs"
+  display_mapping:
+    business_name: "Employer"
+    category: "Job Title"
+    location: "Location"
+    company_scale: "Scale"
+    html_score: "Toxicity Score"
+    gemini_flaws: "AI Culture Analysis"
+    backstory_hooks: "Glassdoor/Reddit Sentiment"
+    website_url: "Apply Link"
+  job_type: "FULLTIME" # UI Dropdown: FULLTIME, PARTTIME, CONTRACT, INTERNSHIP, ANY
+  salary_floor: 60000  # UI Slider or Input
+  radius_miles: 25     # UI Slider or Dropdown
+  score_threshold: 0
+  sqlite_filename: "jobs_database.db"
+  html_prefix: "jobs_"
+  db_file: "seen_jobs.json"
+  out_dir: "output"
+
+queries:
+  - "marketing manager"
+  - "registered nurse"
+  - "store manager"
+
+locations:
+  - "32301" # Zipcode support
+  - "Tampa, FL" # City, State support

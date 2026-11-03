@@ -60,28 +60,3 @@ Concurrent workers write completed records to local SQLite databases and HTML fi
 #### 5. Network Protocol Verification & Data Normalization
 * **Location Standardization**: The harvester sends configured target locations to OpenStreetMap Nominatim before harvesting. It respects Nominatim's policy with a mandatory 1.1-second delay, normalizing raw user inputs (such as postal codes or misformatted town names) into standardized `City, State` strings.
 * **Email Verification**: When scraping emails from DOM bodies, regex false-positives (e.g., `.png`, `.jpg`, Sentry crash-reporter emails) are stripped via an explicit blocklist. The module then queries DNS MX records using `dnspython` and performs an SMTP handshake (`HELO` -> `MAIL FROM` -> `RCPT TO`) over port 25 without sending an email. Code 250 marks the email as verified, code 550 flags it as a dead bounce, and dropped handshakes fall back safely to `MX_VALID`.
-
----
-
-## Deployment & Execution
-
-The system supports two execution paths depending on user requirements:
-
-1. **Standalone Desktop Application (Client Mode)**:
-   Compiled for Windows into a standalone directory build via PyInstaller (`build.bat`). The executable runs `run_app.py`, which initializes the CustomTkinter GUI dashboard (`gui/app.py`). On first launch, the bootloader automatically checks for and installs the local Chromium Playwright binary. The desktop interface lets users select YAML recipes from a dropdown, enter API credentials into a persistent `.env` manager, and view extracted records inside an isolated SQLite data grid.
-
-2. **Command Line & Automation (Headless Mode)**:
-   The tool can run directly via terminal commands or automated schedulers (Windows Task Scheduler, cron):
-   ```bash
-   python main.py --recipe recipes/web_design.yaml
-   ```
-   Specific execution parameters can be overridden at runtime via CLI arguments:
-   ```bash
-   # Single target inspection
-   python main.py --url https://example.com --name "Example Services"
-
-   # Override harvest limits and query targets
-   python main.py --recipe recipes/job_hunter.yaml --limit 10 --locations "Tampa, FL"
-   ```
-   At completion, the pipeline cleans up stale lock files and opens the generated HTML report directly in the default web browser.
-
